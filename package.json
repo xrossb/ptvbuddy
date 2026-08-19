@@ -2,9 +2,10 @@
   "name": "ptvbuddy",
   "author": "MakeAwesomeHappen",
   "version": "1.0.0",
-  "keywords": ["pebble-app"],
+  "keywords": [
+    "pebble-app"
+  ],
   "private": true,
-  "dependencies": {},
   "pebble": {
     "displayName": "ptvbuddy",
     "uuid": "674f492e-1df6-4c58-a06a-1c23383f4378",
@@ -28,5 +29,14 @@
     "resources": {
       "media": []
     }
+  },
+  "scripts": {
+    "build": "tsc",
+    "fmt": "prettier -w .",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.6",
+    "typescript": "^7.0.2"
   }
 }
