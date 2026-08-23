@@ -1,3 +1,3 @@
-Pebble.addEventListener("ready", function (e) {
+Pebble.addEventListener("ready", () => {
   console.log("Hello world! - Sent from your javascript application.");
 });
