@@ -16,7 +16,6 @@ def configure(ctx):
     Universal configuration: add your change prior to calling ctx.load('pebble_sdk').
     """
     ctx.load("pebble_sdk")
-    ctx.find_program("npm", var="NPM")
 
 
 def build(ctx):
@@ -48,21 +47,9 @@ def build(ctx):
             binaries.append({"platform": platform, "app_elf": app_elf})
     ctx.env = cached_env
 
-    node_modules = ctx.path.make_node("node_modules")
-    ctx(rule="${NPM} install", source="package.json", target=node_modules)
-
-    dist = ctx.path.make_node("dist")
-    ctx(
-        rule="${NPM} run build",
-        source=ctx.path.ant_glob(
-            ["src/pkjs/**/*.js", "src/pkjs/**/*.json", "src/pkjs/**/*.ts"]
-        ),
-        target=dist,
-    )
-
     ctx.set_group("bundle")
     ctx.pbl_bundle(
         binaries=binaries,
-        js=ctx.path.ant_glob(["dist/pkjs/**/*.js", "dist/pkjs/**/*.json"]),
-        js_entry_file="dist/pkjs/index.js",
+        js=ctx.path.ant_glob(["src/pkjs/**/*.js", "src/pkjs/**/*.json"]),
+        js_entry_file="src/pkjs/index.js",
     )
