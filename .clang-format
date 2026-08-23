@@ -1,0 +1,20 @@
+---
+BasedOnStyle: LLVM
+
+IndentWidth: 4
+ContinuationIndentWidth: 4
+
+AlignAfterOpenBracket: BlockIndent
+BinPackArguments: true
+BinPackParameters: true
+BreakAfterReturnType: Automatic
+PenaltyReturnTypeOnItsOwnLine: 1000000
+
+AlignConsecutiveAssignments: None
+AlignConsecutiveDeclarations: None
+AlignConsecutiveBitFields: None
+AlignConsecutiveMacros: None
+
+AlignArrayOfStructures: Left
+AlignOperands: false
+AlignTrailingComments: true
