@@ -9,11 +9,13 @@ const wireType = {
 
 /** Encodes values into a protobuf message. */
 class Builder {
-  #buffer = new Uint8Vec();
+  constructor() {
+    this._buffer = new Uint8Vec();
+  }
 
-  /** Return a Uint8Array containing the encoded protobuf message. */
+  /** Return a JS array containing the encoded protobuf message. */
   build() {
-    return this.#buffer.toArray();
+    return this._buffer.toArray();
   }
 
   /**
@@ -21,8 +23,8 @@ class Builder {
    * @param {number} value
    */
   int32(field, value) {
-    Encode.field(this.#buffer, field, wireType.varint);
-    Encode.varint(this.#buffer, value);
+    Encode.field(this._buffer, field, wireType.varint);
+    Encode.varint(this._buffer, value);
     return this;
   }
 
@@ -31,8 +33,8 @@ class Builder {
    * @param {bigint} value
    */
   int64(field, value) {
-    Encode.field(this.#buffer, field, wireType.varint);
-    Encode.varint(this.#buffer, value);
+    Encode.field(this._buffer, field, wireType.varint);
+    Encode.varint(this._buffer, value);
     return this;
   }
 
@@ -129,8 +131,8 @@ class Builder {
    * @param {Uint8Array} value
    */
   bytes(field, value) {
-    Encode.field(this.#buffer, field, wireType.len);
-    Encode.len(this.#buffer, value);
+    Encode.field(this._buffer, field, wireType.len);
+    Encode.len(this._buffer, value);
     return this;
   }
 
@@ -234,22 +236,24 @@ const Encode = {
 
 /** Vector of bytes, backed by a dynamically sized Uint8Array. */
 class Uint8Vec {
-  #array = new Uint8Array();
-  #length = 0;
+  constructor() {
+    this._array = new Uint8Array();
+    this._length = 0;
+  }
 
   /** Current utilised length of the vector. */
   get length() {
-    return this.#length;
+    return this._length;
   }
 
   /** Total reserved capacity of the vector. */
   get capacity() {
-    return this.#array.length;
+    return this._array.length;
   }
 
-  /** Create a Uint8Array representation of the vector. */
+  /** Create a plain JS array representation of the vector. */
   toArray() {
-    return this.#array.slice(0, this.#length);
+    return Array.from(this._array.slice(0, this._length));
   }
 
   /**
@@ -266,8 +270,8 @@ class Uint8Vec {
    */
   concat(array) {
     this.reserve(array.length);
-    this.#array.set(array, this.#length);
-    this.#length += array.length;
+    this._array.set(array, this._length);
+    this._length += array.length;
   }
 
   /**
@@ -281,8 +285,8 @@ class Uint8Vec {
     }
 
     const newCapacity = Math.max(this.capacity << 1, this.capacity + capacity);
-    const newBuffer = this.#array.buffer.transferToFixedLength(newCapacity);
-    this.#array = new Uint8Array(newBuffer);
+    const newBuffer = this._array.buffer.transferToFixedLength(newCapacity);
+    this._array = new Uint8Array(newBuffer);
   }
 }
 
