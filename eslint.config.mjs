@@ -12,7 +12,7 @@ export default defineConfig([
   {
     files: ["src/**/*.js"],
     languageOptions: {
-      ecmaVersion: 6,
+      ecmaVersion: 5,
       sourceType: "commonjs",
       globals: {
         Pebble: "readonly",
