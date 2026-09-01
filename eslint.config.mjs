@@ -2,28 +2,19 @@ import globals from "globals";
 import js from "@eslint/js";
 import json from "@eslint/json";
 import { defineConfig } from "eslint/config";
+import tseslint from "typescript-eslint";
 
-export default defineConfig([
-  {
-    files: ["src/**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: ["js/recommended"],
-  },
-  {
-    files: ["src/**/*.js"],
-    languageOptions: {
-      ecmaVersion: 6,
-      sourceType: "commonjs",
-      globals: {
-        Pebble: "readonly",
-        ...globals.browser,
-      },
+export default tseslint.config({
+  files: ["src/pkjs/**/*.{js,mjs,cjs}"],
+  extends: [js.configs.recommended, tseslint.configs.recommendedTypeChecked],
+  languageOptions: {
+    parserOptions: {
+      projectService: true,
     },
   },
-  {
-    files: ["src/**/*.json"],
-    plugins: { json },
-    language: "json/json",
-    extends: ["json/recommended"],
+  rules: {
+    "@typescript-eslint/no-require-imports": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
   },
-]);
+});

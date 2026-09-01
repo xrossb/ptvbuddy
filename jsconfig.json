@@ -1,0 +1,8 @@
+{
+  "include": ["src/pkjs"],
+  "compilerOptions": {
+    "module": "nodenext",
+    "checkJs": true,
+    "typeRoots": ["src/pkjs/types"]
+  }
+}
