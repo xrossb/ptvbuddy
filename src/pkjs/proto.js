@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+const utf8 = require("./utf8");
+
 const wireType = {
   varint: 0,
   i64: 1,
@@ -122,8 +124,8 @@ class Builder {
    * @param {string} value
    */
   string(field, value) {
-    const utf8 = new TextEncoder().encode(value);
-    return this.bytes(field, utf8);
+    const bytes = utf8.encode(value);
+    return this.bytes(field, bytes);
   }
 
   /**
@@ -216,11 +218,11 @@ const Encode = {
   /**
    * Encodes a length-delimited record onto the buffer.
    * @param {Uint8Vec} vec
-   * @param {Uint8Array} v
+   * @param {Uint8Array} bytes
    */
-  len(vec, v) {
-    Encode.varint(vec, v.length);
-    vec.concat(v);
+  len(vec, bytes) {
+    Encode.varint(vec, bytes.length);
+    vec.concat(bytes);
   },
 
   /**
@@ -276,15 +278,20 @@ class Uint8Vec {
 
   /**
    * Pre-allocate additional empty capacity in the vector.
-   * @param {number} capacity
+   * @param {number} size
    */
-  reserve(capacity) {
-    if (this.capacity - this.length >= capacity) {
+  reserve(size) {
+    const required = this.length + size;
+    if (this.capacity >= required) {
       // Already enough empty capacity.
       return;
     }
 
-    const newCapacity = Math.max(this.capacity << 1, this.capacity + capacity);
+    let newCapacity = this.capacity || 1;
+    while (newCapacity < required) {
+      newCapacity <<= 1;
+    }
+
     const newBuffer = this._array.buffer.transferToFixedLength(newCapacity);
     this._array = new Uint8Array(newBuffer);
   }
