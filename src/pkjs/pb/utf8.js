@@ -9,7 +9,7 @@ function encode(string) {
 
   let i = 0;
   while (i < string.length) {
-    const codePoint = string.codePointAt(i);
+    const codePoint = string.codePointAt(i) || 0;
 
     let c = 0;
     let bits = 0;
