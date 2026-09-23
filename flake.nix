@@ -15,6 +15,8 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       formatter = pkgs.alejandra;
-      devShell = pebble.pebbleEnv.${system} {};
+      devShell = pebble.pebbleEnv.${system} {
+        packages = with pkgs; [clang lldb];
+      };
     });
 }
