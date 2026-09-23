@@ -4,3 +4,5 @@ node_modules/
 dist/
 .cache/
 .ruff_cache/
+.lock-waf_linux_build
+.direnv/
