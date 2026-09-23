@@ -1,0 +1,2 @@
+ExtraArgs:
+  - '-Wno-error=unknown-warning-option'

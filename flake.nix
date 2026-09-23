@@ -13,10 +13,15 @@
   }:
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
+      toolchain = pebble.packages.${system}.pebble-toolchain-bin;
     in {
       formatter = pkgs.alejandra;
-      devShell = pebble.pebbleEnv.${system} {
-        packages = with pkgs; [clang-tools lldb];
-      };
+      devShell =
+        (pebble.pebbleEnv.${system} {
+          packages = with pkgs; [clang-tools lldb];
+        }).overrideAttrs (old: {
+          # fix clangd/clang-tidy import errors
+          env = old.env // {CPATH = "${toolchain}/arm-none-eabi/include";};
+        });
     });
 }
