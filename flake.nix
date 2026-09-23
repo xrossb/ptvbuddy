@@ -16,7 +16,7 @@
     in {
       formatter = pkgs.alejandra;
       devShell = pebble.pebbleEnv.${system} {
-        packages = with pkgs; [clang lldb];
+        packages = with pkgs; [clang-tools lldb];
       };
     });
 }

@@ -1,4 +1,6 @@
 #include "splash_window.h"
+#include "../array.h"
+#include "../settings.h"
 #include "main_window.h"
 
 typedef struct {
@@ -9,7 +11,8 @@ typedef struct {
 
 static void on_timer(void* context) {
     Window* window = context;
-    Window* main_window = MainWindow_create();
+    SplashWindow* data = window_get_user_data(window);
+    Window* main_window = MainWindow_create(data->settings);
 
     window_stack_push(main_window, true);
     window_stack_remove(window, false);
@@ -29,6 +32,17 @@ static void load(Window* window) {
     // 2. listen for settings payload
     // 3. populate data->settings
     // 4. goto main window
+
+    // dummy for now
+    arrpush(
+        data->settings->favourite_routes,
+        ((Route){
+            .route_type = ROUTE_TYPE_BUS,
+            .stop_id = 42,
+            .route_id = 24,
+            .display_name = "Some Rd/Other St",
+        })
+    );
 
     app_timer_register(500, on_timer, window);
 }

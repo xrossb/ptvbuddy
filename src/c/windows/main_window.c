@@ -4,22 +4,15 @@
 #include "stops_window.h"
 
 typedef struct {
-    int route_type;
-    int stop_id;
-    int route_id;
-    char display_name[32];
-} Favourite;
+    Settings* settings;
 
-typedef struct {
     GBitmap* location_bitmap;
     MenuLayer* menu_layer;
-
-    Favourite* favourites;
 } MainWindow;
 
 static uint16_t get_num_rows(MenuLayer* menu_layer, uint16_t section_index, void* context) {
     MainWindow* data = context;
-    return 1 + arrlen(data->favourites);
+    return 1 + arrlen(data->settings->favourite_routes);
 }
 
 static void draw_row(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_index, void* context) {
@@ -30,7 +23,7 @@ static void draw_row(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_ind
         return;
     }
 
-    Favourite* route = &data->favourites[cell_index->row - 1];
+    Route* route = &data->settings->favourite_routes[cell_index->row - 1];
     menu_cell_basic_draw(ctx, cell_layer, route->display_name, "in 10m", NULL);
 }
 
@@ -46,8 +39,8 @@ static void select_click(MenuLayer* menu_layer, MenuIndex* cell_index, void* con
         new_window = StopsWindow_create();
     } else {
         int index = cell_index->row - 1;
-        Favourite* favourite = &data->favourites[index];
-        new_window = DeparturesWindow_create(favourite->stop_id, favourite->route_id);
+        Route* route = &data->settings->favourite_routes[index];
+        new_window = DeparturesWindow_create(route->stop_id, route->route_id);
     }
 
     window_stack_push(new_window, true);
@@ -57,13 +50,12 @@ static void unload(Window* window) {
     MainWindow* data = window_get_user_data(window);
     gbitmap_destroy(data->location_bitmap);
     menu_layer_destroy(data->menu_layer);
-    arrfree(data->favourites);
     free(data);
 
     window_destroy(window);
 }
 
-Window* MainWindow_create(void) {
+Window* MainWindow_create(Settings* settings) {
     Window* window = window_create();
 
     WindowHandlers handlers = {
@@ -72,14 +64,10 @@ Window* MainWindow_create(void) {
     window_set_window_handlers(window, handlers);
 
     MainWindow* data = malloc(sizeof(MainWindow));
-    *data = (MainWindow){};
+    *data = (MainWindow){
+        .settings = settings,
+    };
     window_set_user_data(window, data);
-
-    for (int i = 0; i < 3; i++) {
-        Favourite route = {};
-        snprintf(route.display_name, 32, "fav route #%d", i);
-        arrpush(data->favourites, route);
-    }
 
     GBitmap* location_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_LOCATION);
     data->location_bitmap = location_bitmap;
