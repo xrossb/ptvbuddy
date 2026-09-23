@@ -1,8 +1,11 @@
 ---
 BasedOnStyle: LLVM
+ColumnLimit: 100
 
 IndentWidth: 4
 ContinuationIndentWidth: 4
+
+PointerAlignment: Left
 
 AlignAfterOpenBracket: BlockIndent
 BinPackArguments: true

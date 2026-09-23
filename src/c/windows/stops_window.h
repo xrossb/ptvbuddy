@@ -2,4 +2,4 @@
 
 #include <pebble.h>
 
-Window* MainWindow_create(void);
+Window* StopsWindow_create(void);

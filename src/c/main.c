@@ -1,12 +1,13 @@
-#include "windows/main_window.h"
+#include "settings.h"
+#include "windows/splash_window.h"
 #include <pebble.h>
 
-static void init(void) { main_window_push(); }
-
-static void deinit(void) {}
-
 int main(void) {
-    init();
+    Settings* settings = Settings_create();
+    Window* splash_window = SplashWindow_create(settings);
+
+    window_stack_push(splash_window, true);
     app_event_loop();
-    deinit();
+
+    Settings_destroy(settings);
 }

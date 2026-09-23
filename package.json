@@ -24,10 +24,21 @@
       "watchface": false
     },
     "messageKeys": [
-      "dummy"
+      "Kind",
+      "FavouriteCount",
+      "FavouriteRouteTypes",
+      "FavouriteStopIDs",
+      "FavouriteRouteIDs",
+      "FavouriteDisplayNames"
     ],
     "resources": {
-      "media": []
+      "media": [
+        {
+          "file": "images/location.png",
+          "type": "bitmap",
+          "name": "IMAGE_LOCATION"
+        }
+      ]
     }
   },
   "scripts": {
