@@ -1,7 +1,3 @@
 Pebble.addEventListener("ready", () => {
-  sendFavouriteRoutes();
+  Pebble.sendAppMessage({});
 });
-
-function sendFavouriteRoutes() {}
-
-function fetchNearbyStops() {}
