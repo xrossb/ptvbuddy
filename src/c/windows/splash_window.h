@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../settings.h"
+#include "../app_state.h"
 #include <pebble.h>
 
-Window* SplashWindow_create(Settings* settings);
+Window* SplashWindow_create(AppState* state);

@@ -26,10 +26,24 @@
     "messageKeys": [
       "Kind",
       "FavouriteCount",
-      "FavouriteRouteTypes",
-      "FavouriteStopIDs",
-      "FavouriteRouteIDs",
-      "FavouriteDisplayNames"
+      "FavouriteRouteTypes[8]",
+      "FavouriteStopIDs[8]",
+      "FavouriteRouteIDs[8]",
+      "FavouriteDisplayNames[8]",
+      "StopsCount",
+      "StopIDs[12]",
+      "StopDistances[12]",
+      "StopNames[12]",
+      "RoutesCount",
+      "RouteTypes[16]",
+      "RouteIDs[16]",
+      "RouteNames[16]",
+      "DeparturesCount",
+      "DepartureETAs[12]",
+      "DepartureFlags[12]",
+      "DepartureHeadsigns[12]",
+      "StopID",
+      "RouteID"
     ],
     "resources": {
       "media": [
@@ -37,6 +51,31 @@
           "file": "images/location.png",
           "type": "bitmap",
           "name": "IMAGE_LOCATION"
+        },
+        {
+          "file": "images/train.png",
+          "type": "bitmap",
+          "name": "IMAGE_ICON_TRAIN"
+        },
+        {
+          "file": "images/tram.png",
+          "type": "bitmap",
+          "name": "IMAGE_ICON_TRAM"
+        },
+        {
+          "file": "images/bus.png",
+          "type": "bitmap",
+          "name": "IMAGE_ICON_BUS"
+        },
+        {
+          "file": "images/vline.png",
+          "type": "bitmap",
+          "name": "IMAGE_ICON_VLINE"
+        },
+        {
+          "file": "images/night_bus.png",
+          "type": "bitmap",
+          "name": "IMAGE_ICON_NIGHT_BUS"
         }
       ]
     }
