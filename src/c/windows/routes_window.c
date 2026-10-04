@@ -1,4 +1,5 @@
 #include "routes_window.h"
+#include "../menu_cell.h"
 #include "departures_window.h"
 #include <string.h>
 
@@ -40,7 +41,7 @@ static void draw_row(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_ind
     const Route* routes = AppState_routes(data->state, data->stop_id, &count);
     const Route* route = &routes[cell_index->row];
 
-    menu_cell_basic_draw(
+    menu_cell_draw_with_icon(
         ctx, cell_layer, route->display_name, NULL, AppState_icon(data->state, route->route_type)
     );
 }

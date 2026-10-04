@@ -1,5 +1,6 @@
 #include "main_window.h"
 #include "../array.h"
+#include "../menu_cell.h"
 #include "departures_window.h"
 #include "stops_window.h"
 
@@ -57,7 +58,9 @@ static void draw_row(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_ind
     MainWindow* data = context;
 
     if (cell_index->section == SECTION_NEARBY) {
-        menu_cell_basic_draw(ctx, cell_layer, "Find nearby", NULL, data->state->location_bitmap);
+        menu_cell_draw_with_icon(
+            ctx, cell_layer, "Find nearby", NULL, data->state->location_bitmap
+        );
         return;
     }
 
@@ -72,7 +75,7 @@ static void draw_row(GContext* ctx, const Layer* cell_layer, MenuIndex* cell_ind
         subtitle[0] = '\0';
     }
 
-    menu_cell_basic_draw(
+    menu_cell_draw_with_icon(
         ctx, cell_layer, route->display_name, subtitle,
         AppState_icon(data->state, route->route_type)
     );
